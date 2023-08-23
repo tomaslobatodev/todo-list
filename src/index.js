@@ -28,17 +28,32 @@ function loadTasks() {
             `}
            <span class='${task.value ? 'checked' : ''}'>${task.title}</span>
         </div>
-        <button class='delete' id='${task.id}-delete'>delete</button>
+        <button class='delete' id='${task.id}-delete'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+        </button>
         `;
         tasklist.appendChild(taskElement)
     });
 }
 
+function verifyInput(input) {
+    const sameTask = tasks.find(task=>task.title === input)
+    if (sameTask || input === '') return null
+    else return input
+}
+
 function addTask() {
-    const task = new Task(input.value)
-    const updatedTasks = [...tasks, task]
-    tasks = updatedTasks
-    loadTasks()
+    const verifiedInput = verifyInput(input.value)
+    if (verifiedInput === null) {
+        addTaskBtn.style.color = 'red'
+    }
+    else {
+        addTaskBtn.style.color = ''
+        const task = new Task(verifiedInput)
+        const updatedTasks = [...tasks, task]
+        tasks = updatedTasks
+        loadTasks()
+    }
 }
 
 function deleteTask(taskId) {
@@ -65,8 +80,10 @@ addTaskBtn.addEventListener('click', (ev) => {
 })
 
 document.addEventListener('click', (ev) => {
-    if (ev.target.id.includes('delete')) {
-        deleteTask(ev.target.id)
+    const deleteBtn = ev.target.closest('.delete');
+    if (deleteBtn) {
+        const taskId = parseInt(deleteBtn.id.split('-')[0]);
+        deleteTask(taskId);
     }
 })
 
