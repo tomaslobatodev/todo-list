@@ -4,7 +4,7 @@ body, h1 {
 }
 
 main {
-    padding: 10px
+    padding: 10px 20%;
 }
 
 header {
@@ -37,19 +37,22 @@ header a:hover {
 #addtaskform {
     width: 100%;
     height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #newtaskinput {
     height: 100%;
     padding: 0 10px;
-    width: 75%;
+    width: 77%;
     border: 1px solid black;
     border-radius: 8px;
 }
 
 #addtaskform button {
     height: 105%;
-    width: 16%;
+    width: 18%;
     border: 1px solid black;
     background-color: white;
     border-radius: 8px;
